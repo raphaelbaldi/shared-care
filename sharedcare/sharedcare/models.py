@@ -6,18 +6,18 @@ from django.contrib.auth.models import User
 # User profile, connected to an actual user in the system
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    cpf = models.TextField(max_length=11, blank=False)
+    cpf = models.CharField(max_length=11, blank=False)
     birth_date = models.DateField(null=True, blank=True)
 
 
 class Allergy(models.Model):
-    name = models.TextField(max_length=100, blank=False)
+    name = models.CharField(max_length=100, blank=False)
     description = models.TextField(max_length=500, blank=True)
     symptoms = models.TextField(max_length=500, blank=True)
 
 
 class Doctor(models.Model):
-    name = models.TextField(max_length=100, blank=False)
+    name = models.CharField(max_length=100, blank=False)
     specialty = models.TextField(max_length=50, blank=False)
 
 
@@ -29,7 +29,7 @@ class MedicalAppointment(models.Model):
 
 
 class Food(models.Model):
-    name = models.TextField(max_length=100, blank=False)
+    name = models.CharField(max_length=100, blank=False)
 
 
 class MealType(Enum):
@@ -52,7 +52,7 @@ class Meal(models.Model):
 
 
 class Medicine(models.Model):
-    name = models.TextField(max_length=100, blank=False)
+    name = models.CharField(max_length=100, blank=False)
     description = models.TextField(max_length=500, blank=True, null=True)
 
 
@@ -70,8 +70,8 @@ class ConsumedMedicine(models.Model):
 
 
 class Elderly(models.Model):
-    name = models.TextField(max_length=100, blank=False)
-    cpf = models.TextField(max_length=11, blank=False)
+    name = models.CharField(max_length=100, blank=False)
+    cpf = models.CharField(max_length=11, blank=False)
     birth_date = models.DateField(null=True, blank=True)
     allergies = models.ManyToManyField(Allergy, blank=True)
     caretaker = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, blank=True, null=True)

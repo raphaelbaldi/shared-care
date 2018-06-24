@@ -18,7 +18,7 @@ class Allergy(models.Model):
 
 class Doctor(models.Model):
     name = models.CharField(max_length=100, blank=False)
-    specialty = models.TextField(max_length=50, blank=False)
+    specialty = models.CharField(max_length=50, blank=False)
 
 
 class MedicalAppointment(models.Model):

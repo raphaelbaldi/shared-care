@@ -13,6 +13,10 @@ urlpatterns = [
     url(r'^allergies/create/$', views.allergy_create, name='allergy_create'),
     url(r'^allergies/(?P<pk>\d+)/update/$', views.allergy_update, name='allergy_update'),
     url(r'^allergies/(?P<pk>\d+)/delete/$', views.allergy_delete, name='allergy_delete'),
+    url(r'^doctors/$', views.doctor_list, name='doctor_list'),
+    url(r'^doctors/create/$', views.doctor_create, name='doctor_create'),
+    url(r'^doctors/(?P<pk>\d+)/update/$', views.doctor_update, name='doctor_update'),
+    url(r'^doctors/(?P<pk>\d+)/delete/$', views.doctor_delete, name='doctor_delete'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

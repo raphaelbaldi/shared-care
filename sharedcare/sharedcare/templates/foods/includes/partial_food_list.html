@@ -1,0 +1,22 @@
+{% for food in foods %}
+  <tr>
+    <td>{{ food.id }}</td>
+    <td>{{ food.name }}</td>
+    <td style="width: 150px">
+      <button type="button"
+              class="btn btn-warning btn-sm js-update-food"
+              data-url="{% url 'food_update' food.id %}">
+        <span class="glyphicon glyphicon-pencil"></span> Editar
+      </button>
+      <button type="button"
+              class="btn btn-danger btn-sm js-delete-food"
+              data-url="{% url 'food_delete' food.id %}">
+        <span class="glyphicon glyphicon-trash"></span> Remover
+      </button>
+    </td>
+  </tr>
+{% empty %}
+  <tr>
+    <td colspan="8" class="text-center bg-warning">Nenhum alimento cadastrado</td>
+  </tr>
+{% endfor %}

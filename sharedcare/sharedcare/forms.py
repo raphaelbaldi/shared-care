@@ -13,3 +13,9 @@ class DoctorForm(forms.ModelForm):
     class Meta:
         model = Doctor
         fields = ('name', 'specialty')
+
+
+class FoodForm(forms.ModelForm):
+    class Meta:
+        model = Doctor
+        fields = ('name',)

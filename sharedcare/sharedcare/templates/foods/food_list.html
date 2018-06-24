@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block javascript %}
+  <script src="{% static 'foods/js/foods.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <h1 class="page-header">Alimentos</h1>
+
+  <p>
+    <button type="button" class="btn btn-primary js-create-food" data-url="{% url 'food_create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      Criar alimento
+    </button>
+  </p>
+
+  <table class="table" id="food-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nome</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'foods/includes/partial_food_list.html' %}
+    </tbody>
+  </table>
+
+  <div class="modal fade" id="modal-food">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

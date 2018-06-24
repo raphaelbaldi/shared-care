@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 from sharedcare.views.allergy import *
 from sharedcare.views.doctor import *
 from sharedcare.views.food import *
+from sharedcare.views.medicine import *
 
 
 urlpatterns = [
@@ -24,6 +25,10 @@ urlpatterns = [
     url(r'^foods/create/$', food_create, name='food_create'),
     url(r'^foods/(?P<pk>\d+)/update/$', food_update, name='food_update'),
     url(r'^foods/(?P<pk>\d+)/delete/$', food_delete, name='food_delete'),
+    url(r'^medicines/$', medicine_list, name='medicine_list'),
+    url(r'^medicines/create/$', medicine_create, name='medicine_create'),
+    url(r'^medicines/(?P<pk>\d+)/update/$', medicine_update, name='medicine_update'),
+    url(r'^medicines/(?P<pk>\d+)/delete/$', medicine_delete, name='medicine_delete'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Allergy, Doctor
+from .models import Allergy, Doctor, Medicine
 
 
 class AllergyForm(forms.ModelForm):
@@ -19,3 +19,9 @@ class FoodForm(forms.ModelForm):
     class Meta:
         model = Doctor
         fields = ('name',)
+
+
+class MedicineForm(forms.ModelForm):
+    class Meta:
+        model = Medicine
+        fields = ('name','description')

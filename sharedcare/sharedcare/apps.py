@@ -1,5 +1,7 @@
+from __future__ import unicode_literals
+
 from django.apps import AppConfig
 
 
-class SharedcareConfig(AppConfig):
-    name = 'sharedcare'
+class SharedConfig(AppConfig):
+    name = 'sharedcare.sharedcare'

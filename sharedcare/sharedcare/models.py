@@ -48,7 +48,7 @@ class Meal(models.Model):
         blank=False
     )
     date = models.DateTimeField(null=False, blank=False)
-    foods = models.ManyToManyField(Food, blank=True, null=True)
+    foods = models.ManyToManyField(Food, blank=True)
 
 
 class Medicine(models.Model):
@@ -76,6 +76,6 @@ class Elderly(models.Model):
     allergies = models.ManyToManyField(Allergy, blank=True)
     caretaker = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, blank=True, null=True)
     medical_appointments = models.ManyToManyField('Doctor', through='MedicalAppointment', related_name='person')
-    meals = models.ManyToManyField(Meal, blank=True, null=True)
-    prescribed_medicine = models.ManyToManyField(Prescription, blank=True, null=True)
-    medicine = models.ManyToManyField(ConsumedMedicine, blank=True, null=True)
+    meals = models.ManyToManyField(Meal, blank=True)
+    prescribed_medicine = models.ManyToManyField(Prescription, blank=True)
+    medicine = models.ManyToManyField(ConsumedMedicine, blank=True)

@@ -1,3 +1,4 @@
+from datetime import datetime
 from enum import Enum
 from django.db import models
 from django.contrib.auth.models import User
@@ -79,3 +80,6 @@ class Elderly(models.Model):
     meals = models.ManyToManyField(Meal, blank=True)
     prescribed_medicine = models.ManyToManyField(Prescription, blank=True)
     medicine = models.ManyToManyField(ConsumedMedicine, blank=True)
+
+    def get_age(self):
+        return datetime.now().year - self.birth_date.year

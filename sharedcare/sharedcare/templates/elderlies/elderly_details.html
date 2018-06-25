@@ -7,8 +7,25 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="page-header">Idoso: {{ elderly.name }}</h1>
+    <h1 class="page-header">{{ elderly.name }}, {{ elderly.get_age }} anos</h1>
 
+    <h2>Cuidador: {% if elderly.caretaker == null %}Nenhum{% else %}{{ elderly.caretaker.name }}{% endif %}</h2>
+    <hr />
+
+    <h2>Alergias (allergies)</h2>
+    <hr />
+
+    <h2>Consultas médicas (medical_appointments)</h2>
+    <hr />
+
+    <h2>Refeições (meals)</h2>
+    <hr />
+
+    <h2>Prescrições médicas (prescribed_medicine)</h2>
+    <hr />
+
+    <h2>Remédios consumidos (medicine)</h2>
+    <hr />
   <div class="modal fade" id="modal-elderly">
     <div class="modal-dialog">
       <div class="modal-content">

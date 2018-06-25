@@ -23,6 +23,9 @@
         <li{% if request.path == '/doctors/' %} class="active"{% endif %}>
           <a href="{% url 'doctor_list' %}">Médicos</a>
         </li>
+        <li{% if request.path == '/elderlies/' %} class="active"{% endif %}>
+          <a href="{% url 'elderly_list' %}">Idosos</a>
+        </li>
       </ul>
     </div>
   </div>

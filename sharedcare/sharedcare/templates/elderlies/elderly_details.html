@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block javascript %}
+  <script src="{% static 'elderlies/js/elderlies.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <h1 class="page-header">Idoso: {{ elderly.name }}</h1>
+
+  <div class="modal fade" id="modal-elderly">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

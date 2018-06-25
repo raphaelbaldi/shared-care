@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 
-from sharedcare.forms import ElderlyForm
+from sharedcare.forms import ElderlyForm, ElderlyAllergyForm
 from sharedcare.models import Elderly
 
 
@@ -65,3 +65,10 @@ def elderly_delete(request, pk):
 def elderly_details(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
     return render(request, 'elderlies/elderly_details.html', {'elderly': elderly})
+
+
+def elderly_add_allergy(request, pk):
+    if request.method == 'POST':
+        form = ElderlyAllergyForm(request.POST)
+    else:
+        form = ElderlyAllergyForm()

@@ -12,20 +12,31 @@
     <h2>Cuidador: {% if elderly.caretaker == null %}Nenhum{% else %}{{ elderly.caretaker.name }}{% endif %}</h2>
     <hr />
 
-    <h2>Alergias (allergies)</h2>
+    <h2>Alergias</h2>
     <hr />
+    <p>
+    <button type="button" class="btn btn-primary js-add-allergy-elderly" data-url="{% url 'elderly_add_allergy' elderly.id %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      Adicionar alergia
+    </button>
+    </p>
+    <table class="table" id="allergy-table">
+    <thead>
+      <tr>
+        <th>Alergia</th>
+        <th>Sintomas</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'elderlies/includes/partial_elderly_allergy_list.html' %}
+    </tbody>
+    </table>
 
-    <h2>Consultas médicas (medical_appointments)</h2>
-    <hr />
 
-    <h2>Refeições (meals)</h2>
-    <hr />
 
-    <h2>Prescrições médicas (prescribed_medicine)</h2>
-    <hr />
 
-    <h2>Remédios consumidos (medicine)</h2>
-    <hr />
+
   <div class="modal fade" id="modal-elderly">
     <div class="modal-dialog">
       <div class="modal-content">

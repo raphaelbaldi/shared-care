@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^medicines/create/$', medicine_create, name='medicine_create'),
     url(r'^medicines/(?P<pk>\d+)/update/$', medicine_update, name='medicine_update'),
     url(r'^medicines/(?P<pk>\d+)/delete/$', medicine_delete, name='medicine_delete'),
+    url(r'^elderlies/(?P<pk>\d+)/add_allergy/$', elderly_add_allergy, name='elderly_add_allergy')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

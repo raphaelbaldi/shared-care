@@ -31,3 +31,9 @@ class ElderlyForm(forms.ModelForm):
     class Meta:
         model = Elderly
         fields = ('name','cpf','birth_date',)
+
+
+class ElderlyAllergyForm(forms.ModelForm):
+    class Meta:
+        model = Elderly
+        fields = ('allergies',)

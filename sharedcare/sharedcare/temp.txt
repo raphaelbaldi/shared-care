@@ -1,0 +1,96 @@
+<h2>Consultas médicas (medical_appointments)</h2>
+    <hr />
+    <p>
+    <button type="button" class="btn btn-primary js-add-medical-appointment-elderly" data-url="{% url 'elderly_create_medical_appointment' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      Adicionar consulta médica
+    </button>
+    </p>
+    <table class="table" id="medical-appointment-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Data</th>
+        <th>Médico</th>
+        <th>Especialidade</th>
+        <th>Descrição</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'elderlies/includes/partial_elderly_medical_appointment_list.html' %}
+    </tbody>
+    </table>
+
+
+    <h2>Refeições (meals)</h2>
+    <hr />
+    <p>
+    <button type="button" class="btn btn-primary js-add-medical-appointment-elderly" data-url="{% url 'elderly_create_meal' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      Adicionar refeição
+    </button>
+    </p>
+    <table class="table" id="meal-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Data/Hora</th>
+        <th>Tipo</th>
+        <th>Alimentos</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'elderlies/includes/partial_elderly_meal_list.html' %}
+    </tbody>
+    </table>
+
+
+    <h2>Prescrições médicas (prescribed_medicine)</h2>
+    <hr />
+    <p>
+    <button type="button" class="btn btn-primary js-add-prescription-elderly" data-url="{% url 'elderly_create_prescription' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      Adicionar prescrição de medicamento
+    </button>
+    </p>
+    <table class="table" id="prescription-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Medicamento</th>
+        <th>Início</th>
+        <th>Término</th>
+        <th>A cada quantas horas?</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'elderlies/includes/partial_elderly_prescription_list.html' %}
+    </tbody>
+    </table>
+
+
+    <h2>Remédios consumidos (medicine)</h2>
+    <hr />
+    <p>
+    <button type="button" class="btn btn-primary js-add-medicine-elderly" data-url="{% url 'elderly_create_medicine_intake' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      Adicionar injestão de medicamento
+    </button>
+    </p>
+    <table class="table" id="medicine-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Data/Hora</th>
+        <th>Medicamento</th>
+        <th>Dose</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'elderlies/includes/partial_elderly_medicine_list.html' %}
+    </tbody>
+    </table>

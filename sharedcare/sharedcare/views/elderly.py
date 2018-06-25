@@ -67,8 +67,28 @@ def elderly_details(request, pk):
     return render(request, 'elderlies/elderly_details.html', {'elderly': elderly})
 
 
-def elderly_add_allergy(request, pk):
+def save_elderly_allergy_form(request, form, template_name, pk):
+    data = dict()
     if request.method == 'POST':
-        form = ElderlyAllergyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            elderly = Elderly.objects.get(pk=pk)
+            data['html_elderly_list'] = render_to_string('elderlies/includes/allergy/partial_elderly_allergy_list.html', {
+                'elderly': elderly
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    print(template_name)
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def elderly_add_allergy(request, pk):
+    elderly = get_object_or_404(Elderly, pk=pk)
+    if request.method == 'POST':
+        form = ElderlyAllergyForm(request.POST, elderly=elderly)
     else:
-        form = ElderlyAllergyForm()
+        form = ElderlyAllergyForm(elderly=elderly)
+    return save_elderly_allergy_form(request, form, 'elderlies/includes/allergy/partial_elderly_allergy_add.html', pk=pk)

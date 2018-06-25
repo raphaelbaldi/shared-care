@@ -34,6 +34,10 @@ class ElderlyForm(forms.ModelForm):
 
 
 class ElderlyAllergyForm(forms.ModelForm):
+
+    def __init__(self, elderly):
+        super(ElderlyAllergyForm, self).__init__()
+
     class Meta:
         model = Elderly
         fields = ('allergies',)

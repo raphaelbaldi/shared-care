@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block javascript %}
-  <script src="{% static 'elderlies/js/elderlies.js' %}"></script>
+  <script src="{% static 'elderlies/js/elderlies_details.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -15,12 +15,12 @@
     <h2>Alergias</h2>
     <hr />
     <p>
-    <button type="button" class="btn btn-primary js-add-allergy-elderly" data-url="{% url 'elderly_add_allergy' elderly.id %}">
+    <button type="button" class="btn btn-primary js-elderly-add-allergy" data-url="{% url 'elderly_add_allergy' elderly.id %}">
       <span class="glyphicon glyphicon-plus"></span>
       Adicionar alergia
     </button>
     </p>
-    <table class="table" id="allergy-table">
+    <table class="table" id="elderly-allergy-table">
     <thead>
       <tr>
         <th>Alergia</th>
@@ -29,7 +29,7 @@
       </tr>
     </thead>
     <tbody>
-      {% include 'elderlies/includes/partial_elderly_allergy_list.html' %}
+      {% include 'elderlies/includes/allergy/partial_elderly_allergy_list.html' %}
     </tbody>
     </table>
 

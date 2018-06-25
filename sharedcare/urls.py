@@ -22,11 +22,14 @@ urlpatterns = [
     url(r'^doctors/create/$', doctor_create, name='doctor_create'),
     url(r'^doctors/(?P<pk>\d+)/update/$', doctor_update, name='doctor_update'),
     url(r'^doctors/(?P<pk>\d+)/delete/$', doctor_delete, name='doctor_delete'),
+
     url(r'^elderlies/$', elderly_list, name='elderly_list'),
     url(r'^elderlies/create/$', elderly_create, name='elderly_create'),
     url(r'^elderlies/(?P<pk>\d+)/update/$', elderly_update, name='elderly_update'),
     url(r'^elderlies/(?P<pk>\d+)/delete/$', elderly_delete, name='elderly_delete'),
     url(r'^elderlies/(?P<pk>\d+)/details/$', elderly_details, name='elderly_details'),
+    url(r'^elderlies/(?P<pk>\d+)/addAllergy/$', elderly_add_allergy, name='elderly_add_allergy'),
+
     url(r'^foods/$', food_list, name='food_list'),
     url(r'^foods/create/$', food_create, name='food_create'),
     url(r'^foods/(?P<pk>\d+)/update/$', food_update, name='food_update'),
@@ -35,7 +38,6 @@ urlpatterns = [
     url(r'^medicines/create/$', medicine_create, name='medicine_create'),
     url(r'^medicines/(?P<pk>\d+)/update/$', medicine_update, name='medicine_update'),
     url(r'^medicines/(?P<pk>\d+)/delete/$', medicine_delete, name='medicine_delete'),
-    url(r'^elderlies/(?P<pk>\d+)/add_allergy/$', elderly_add_allergy, name='elderly_add_allergy')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 
 from sharedcare.forms import ElderlyForm, ElderlyAllergyForm
-from sharedcare.models import Elderly, Allergy, Meal, ConsumedMedicine, Prescription
+from sharedcare.models import Elderly, Allergy, Meal, ConsumedMedicine, Prescription, MedicalAppointment
 
 
 def elderly_list(request):
@@ -189,4 +189,22 @@ def elderly_add_medical_appointment(request, pk):
 
 
 def elderly_delete_medical_appointment(request, pk, mapk):
-    pass
+    elderly = get_object_or_404(Elderly, pk=pk)
+    medical_appointment = get_object_or_404(MedicalAppointment, pk=mapk)
+    data = dict()
+    if request.method == 'POST':
+        elderly.medical_appointments.remove(medical_appointment)
+        medical_appointment.delete()
+
+        data['form_is_valid'] = True
+
+        data['html_elderly_medical_appointment_list'] = render_to_string(
+            'elderlies/includes/medical_appointment/partial_elderly_medical_appointment_list.html', {
+                'elderly': elderly
+            })
+    else:
+        context = {'elderly': elderly, 'medical_appointment': medical_appointment}
+        data['html_form'] = render_to_string('elderlies/includes/medical_appointment/partial_elderly_medical_appointment_delete.html',
+                                             context,
+                                             request=request)
+    return JsonResponse(data)

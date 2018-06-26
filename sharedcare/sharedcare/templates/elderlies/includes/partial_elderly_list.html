@@ -3,7 +3,7 @@
         <td>{{ elderly.id }}</td>
         <td><a href="{% url 'elderly_details' elderly.id %}">{{ elderly.name }}</a></td>
         <td>{{ elderly.birth_date }}</td>
-        <td>{{ elderly.caretaker }}</td>
+        <td>{% if elderly.caretaker %}{{ elderly.caretaker.name }}{% else %}Nenhum{% endif %}</td>
         <td style="width: 150px">
             <button type="button"
                     class="btn btn-warning btn-sm js-update-elderly"

@@ -64,7 +64,8 @@ def elderly_delete(request, pk):
 
 def elderly_details(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
-    return render(request, 'elderlies/elderly_details.html', {'elderly': elderly})
+    medical_appointments = MedicalAppointment.objects.filter(person=elderly)
+    return render(request, 'elderlies/elderly_details.html', {'elderly': elderly, 'medical_appointments': medical_appointments})
 
 
 def elderly_add_allergy(request, pk):

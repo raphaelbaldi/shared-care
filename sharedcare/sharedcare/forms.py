@@ -42,6 +42,14 @@ class ElderlyMedicalAppointmentForm(forms.ModelForm):
         model = MedicalAppointment
         fields = ('date', 'doctor', 'description',)
 
+    def __init__(self, *args, **kwargs):
+        super(ElderlyMedicalAppointmentForm, self).__init__(*args, **kwargs)
+        choices = []
+        for choice in self.fields["doctor"].choices:
+            print(choice)
+            choices.insert(choice.id, choice.name)
+        self.fields["doctor"].choices = [("-1", "----------------"),] + choices
+
 
 class ElderlyMealForm(forms.ModelForm):
     class Meta:

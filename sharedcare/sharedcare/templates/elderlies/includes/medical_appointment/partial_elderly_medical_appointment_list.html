@@ -1,4 +1,4 @@
-{% for medical_appointment in elderly.medical_appointments.all %}
+{% for medical_appointment in medical_appointments %}
     <tr>
         <td>{{ medical_appointment.date }}</td>
         <td>{{ medical_appointment.doctor.name }}</td>

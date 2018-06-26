@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Allergy, Doctor, Medicine, Elderly, Food
+from .models import Allergy, Doctor, Medicine, Elderly, Food, MedicalAppointment, Meal, Prescription, ConsumedMedicine
 
 
 class AllergyForm(forms.ModelForm):
@@ -35,3 +35,27 @@ class ElderlyForm(forms.ModelForm):
 
 class ElderlyAllergyForm(forms.Form):
     allergies = forms.ModelChoiceField(queryset=Allergy.objects.all())
+
+
+class ElderlyMedicalAppointmentForm(forms.ModelForm):
+    class Meta:
+        model = MedicalAppointment
+        fields = ('date', 'doctor', 'description',)
+
+
+class ElderlyMealForm(forms.ModelForm):
+    class Meta:
+        model = Meal
+        fields = ('date', 'type', 'foods',)
+
+
+class ElderlyPrescriptionForm(forms.ModelForm):
+    class Meta:
+        model = Prescription
+        fields = ('medicine', 'startDate', 'endDate', 'frequency',)
+
+
+class ElderlyConsumedMedicineForm(forms.ModelForm):
+    class Meta:
+        model = ConsumedMedicine
+        fields = ('date', 'medicine', 'amount',)

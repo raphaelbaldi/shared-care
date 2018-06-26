@@ -58,6 +58,6 @@ def medicine_delete(request, pk):
         })
     else:
         context = {'medicine': medicine}
-        data['html_form'] = render_to_string('medicines/includes/partial_medicine_delete.html', context, request=request)
+        data['html_form'] = render_to_string('medicines/includes/partial_medicine_delete.html', context,
+                                             request=request)
     return JsonResponse(data)
-

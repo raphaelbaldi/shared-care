@@ -3,38 +3,38 @@
 {% load static %}
 
 {% block javascript %}
-  <script src="{% static 'doctors/js/doctors.js' %}"></script>
+    <script src="{% static 'doctors/js/doctors.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-  <h1 class="page-header">Médicos</h1>
+    <h1 class="page-header">Médicos</h1>
 
-  <p>
-    <button type="button" class="btn btn-primary js-create-doctor" data-url="{% url 'doctor_create' %}">
-      <span class="glyphicon glyphicon-plus"></span>
-      Criar médico
-    </button>
-  </p>
+    <p>
+        <button type="button" class="btn btn-primary js-create-doctor" data-url="{% url 'doctor_create' %}">
+            <span class="glyphicon glyphicon-plus"></span>
+            Criar médico
+        </button>
+    </p>
 
-  <table class="table" id="doctor-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Nome</th>
-        <th>Especialidade</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% include 'doctors/includes/partial_doctor_list.html' %}
-    </tbody>
-  </table>
+    <table class="table" id="doctor-table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Especialidade</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'doctors/includes/partial_doctor_list.html' %}
+        </tbody>
+    </table>
 
-  <div class="modal fade" id="modal-doctor">
-    <div class="modal-dialog">
-      <div class="modal-content">
+    <div class="modal fade" id="modal-doctor">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 {% endblock %}

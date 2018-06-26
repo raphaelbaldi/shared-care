@@ -1,22 +1,22 @@
 {% for medicine in medicines %}
-  <tr>
-    <td>{{ medicine.id }}</td>
-    <td>{{ medicine.name }}</td>
-    <td style="width: 150px">
-      <button type="button"
-              class="btn btn-warning btn-sm js-update-medicine"
-              data-url="{% url 'medicine_update' medicine.id %}">
-        <span class="glyphicon glyphicon-pencil"></span> Editar
-      </button>
-      <button type="button"
-              class="btn btn-danger btn-sm js-delete-medicine"
-              data-url="{% url 'medicine_delete' medicine.id %}">
-        <span class="glyphicon glyphicon-trash"></span> Remover
-      </button>
-    </td>
-  </tr>
+    <tr>
+        <td>{{ medicine.id }}</td>
+        <td>{{ medicine.name }}</td>
+        <td style="width: 150px">
+            <button type="button"
+                    class="btn btn-warning btn-sm js-update-medicine"
+                    data-url="{% url 'medicine_update' medicine.id %}">
+                <span class="glyphicon glyphicon-pencil"></span> Editar
+            </button>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-medicine"
+                    data-url="{% url 'medicine_delete' medicine.id %}">
+                <span class="glyphicon glyphicon-trash"></span> Remover
+            </button>
+        </td>
+    </tr>
 {% empty %}
-  <tr>
-    <td colspan="4" class="text-center bg-warning">Nenhum medicamento cadastrado</td>
-  </tr>
+    <tr>
+        <td colspan="4" class="text-center bg-warning">Nenhum medicamento cadastrado</td>
+    </tr>
 {% endfor %}

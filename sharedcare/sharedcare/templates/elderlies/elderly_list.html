@@ -3,39 +3,39 @@
 {% load static %}
 
 {% block javascript %}
-  <script src="{% static 'elderlies/js/elderlies.js' %}"></script>
+    <script src="{% static 'elderlies/js/elderlies.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-  <h1 class="page-header">Idosos</h1>
+    <h1 class="page-header">Idosos</h1>
 
-  <p>
-    <button type="button" class="btn btn-primary js-create-elderly" data-url="{% url 'elderly_create' %}">
-      <span class="glyphicon glyphicon-plus"></span>
-      Criar idoso
-    </button>
-  </p>
+    <p>
+        <button type="button" class="btn btn-primary js-create-elderly" data-url="{% url 'elderly_create' %}">
+            <span class="glyphicon glyphicon-plus"></span>
+            Criar idoso
+        </button>
+    </p>
 
-  <table class="table" id="elderly-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Nome</th>
-        <th>Data de Nascimento</th>
-        <th>Cuidador</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% include 'elderlies/includes/partial_elderly_list.html' %}
-    </tbody>
-  </table>
+    <table class="table" id="elderly-table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Data de Nascimento</th>
+            <th>Cuidador</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'elderlies/includes/partial_elderly_list.html' %}
+        </tbody>
+    </table>
 
-  <div class="modal fade" id="modal-elderly">
-    <div class="modal-dialog">
-      <div class="modal-content">
+    <div class="modal fade" id="modal-elderly">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
 {% endblock %}

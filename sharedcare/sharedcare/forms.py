@@ -24,20 +24,10 @@ class FoodForm(forms.ModelForm):
 class MedicineForm(forms.ModelForm):
     class Meta:
         model = Medicine
-        fields = ('name','description',)
+        fields = ('name', 'description',)
 
 
 class ElderlyForm(forms.ModelForm):
     class Meta:
         model = Elderly
-        fields = ('name','cpf','birth_date',)
-
-
-class ElderlyAllergyForm(forms.ModelForm):
-
-    def __init__(self, elderly):
-        super(ElderlyAllergyForm, self).__init__()
-
-    class Meta:
-        model = Elderly
-        fields = ('allergies',)
+        fields = ('name', 'cpf', 'birth_date',)

@@ -1,17 +1,19 @@
-{% for allergy in elderly.allergies.all %}
-  <tr>
-    <td>{{ allergy.name }}</td>
-    <td>{{ allergy.symptoms }}</td>
-    <td style="width: 150px">
-      <button type="button"
-              class="btn btn-danger btn-sm js-delete-elderly-allergy"
-              data-url="{% url 'elderly_delete_allergy' elderly.id allergy.id %}">
-        <span class="glyphicon glyphicon-trash"></span> Remover
-      </button>
-    </td>
-  </tr>
+{% for prescription in elderly.prescribed_medicine.all %}
+    <tr>
+        <td>{{ prescription.medicine.name }}</td>
+        <td>{{ prescription.startDate }}</td>
+        <td>{{ prescription.endDate }}</td>
+        <td>{{ prescription.frequency }}</td>
+        <td style="width: 150px">
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-elderly-prescription"
+                    data-url="{% url 'elderly_delete_prescription' elderly.id prescription.id %}">
+                <span class="glyphicon glyphicon-trash"></span> Remover
+            </button>
+        </td>
+    </tr>
 {% empty %}
-  <tr>
-    <td colspan="3" class="text-center bg-warning">Nenhuma alergia cadastrada para o idoso</td>
-  </tr>
+    <tr>
+        <td colspan="5" class="text-center bg-warning">Nenhuma prescrição cadastrada para o idoso</td>
+    </tr>
 {% endfor %}

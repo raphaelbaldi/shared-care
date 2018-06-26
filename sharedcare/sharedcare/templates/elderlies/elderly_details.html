@@ -3,45 +3,115 @@
 {% load static %}
 
 {% block javascript %}
-  <script src="{% static 'elderlies/js/elderlies_details.js' %}"></script>
+    <script src="{% static 'elderlies/js/elderlies_details.js' %}"></script>
 {% endblock %}
 
 {% block content %}
     <h1 class="page-header">{{ elderly.name }}, {{ elderly.get_age }} anos</h1>
 
     <h2>Cuidador: {% if elderly.caretaker == null %}Nenhum{% else %}{{ elderly.caretaker.name }}{% endif %}</h2>
-    <hr />
+    <hr/>
 
     <h2>Alergias</h2>
-    <hr />
+    <hr/>
     <p>
-    <button type="button" class="btn btn-primary js-elderly-add-allergy" data-url="{% url 'elderly_add_allergy' elderly.id %}">
-      <span class="glyphicon glyphicon-plus"></span>
-      Adicionar alergia
-    </button>
+        <button type="button" class="btn btn-primary js-elderly-add-allergy"
+                data-url="{% url 'elderly_add_allergy' elderly.id %}">
+            <span class="glyphicon glyphicon-plus"></span>
+            Adicionar alergia
+        </button>
     </p>
     <table class="table" id="elderly-allergy-table">
-    <thead>
-      <tr>
-        <th>Alergia</th>
-        <th>Sintomas</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% include 'elderlies/includes/allergy/partial_elderly_allergy_list.html' %}
-    </tbody>
+        <thead>
+        <tr>
+            <th>Alergia</th>
+            <th>Sintomas</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'elderlies/includes/allergy/partial_elderly_allergy_list.html' %}
+        </tbody>
     </table>
 
 
+    <h2>Refeições</h2>
+    <hr/>
+    <p>
+        <button type="button" class="btn btn-primary js-elderly-add-meal"
+                data-url="{% url 'elderly_add_meal' elderly.id %}">
+            <span class="glyphicon glyphicon-plus"></span>
+            Adicionar refeição
+        </button>
+    </p>
+    <table class="table" id="elderly-meal-table">
+        <thead>
+        <tr>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Alimentos</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'elderlies/includes/meal/partial_elderly_meal_list.html' %}
+        </tbody>
+    </table>
 
 
+    <h2>Consultas médicas</h2>
+    <hr/>
+    <p>
+        <button type="button" class="btn btn-primary js-elderly-add-medical_appointment"
+                data-url="{% url 'elderly_add_medical_appointment' elderly.id %}">
+            <span class="glyphicon glyphicon-plus"></span>
+            Adicionar consulta
+        </button>
+    </p>
+    <table class="table" id="elderly-medical-appointment-table">
+        <thead>
+        <tr>
+            <th>Data</th>
+            <th>Médico</th>
+            <th>Especialidade</th>
+            <th>Descrição</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'elderlies/includes/medical_appointment/partial_elderly_medical_appointment_list.html' %}
+        </tbody>
+    </table>
 
-  <div class="modal fade" id="modal-elderly">
-    <div class="modal-dialog">
-      <div class="modal-content">
+    <h2>Medicamentos prescritos</h2>
+    <hr/>
+    <p>
+        <button type="button" class="btn btn-primary js-elderly-add-prescription"
+                data-url="{% url 'elderly_add_prescription' elderly.id %}">
+            <span class="glyphicon glyphicon-plus"></span>
+            Adicionar prescrição médica
+        </button>
+    </p>
+    <table class="table" id="elderly-prescription-table">
+        <thead>
+        <tr>
+            <th>Medicamento</th>
+            <th>Data de início</th>
+            <th>Data de fim</th>
+            <th>Frequência</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'elderlies/includes/prescription/partial_elderly_prescription_list.html' %}
+        </tbody>
+    </table>
 
-      </div>
+    <div class="modal fade" id="modal-elderly">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div>
+        </div>
     </div>
-  </div>
 {% endblock %}

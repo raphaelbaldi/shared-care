@@ -1,7 +1,8 @@
 from datetime import datetime
 from enum import Enum
-from django.db import models
+
 from django.contrib.auth.models import User
+from django.db import models
 
 
 # User profile, connected to an actual user in the system
@@ -61,7 +62,7 @@ class Prescription(models.Model):
     medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
     startDate = models.DateField(blank=False, null=False)
     endDate = models.DateField(blank=True, null=True)
-    frequency = models.PositiveIntegerField() # In hours
+    frequency = models.PositiveIntegerField()  # In hours
 
 
 class ConsumedMedicine(models.Model):

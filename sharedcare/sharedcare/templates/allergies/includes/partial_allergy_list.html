@@ -1,24 +1,24 @@
 {% for allergy in allergies %}
-  <tr>
-    <td>{{ allergy.id }}</td>
-    <td>{{ allergy.name }}</td>
-    <td>{{ allergy.description }}</td>
-      <td>{{ allergy.symptoms }}</td>
-    <td style="width: 150px">
-      <button type="button"
-              class="btn btn-warning btn-sm js-update-allergy"
-              data-url="{% url 'allergy_update' allergy.id %}">
-        <span class="glyphicon glyphicon-pencil"></span> Editar
-      </button>
-      <button type="button"
-              class="btn btn-danger btn-sm js-delete-allergy"
-              data-url="{% url 'allergy_delete' allergy.id %}">
-        <span class="glyphicon glyphicon-trash"></span> Remover
-      </button>
-    </td>
-  </tr>
+    <tr>
+        <td>{{ allergy.id }}</td>
+        <td>{{ allergy.name }}</td>
+        <td>{{ allergy.description }}</td>
+        <td>{{ allergy.symptoms }}</td>
+        <td style="width: 150px">
+            <button type="button"
+                    class="btn btn-warning btn-sm js-update-allergy"
+                    data-url="{% url 'allergy_update' allergy.id %}">
+                <span class="glyphicon glyphicon-pencil"></span> Editar
+            </button>
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-allergy"
+                    data-url="{% url 'allergy_delete' allergy.id %}">
+                <span class="glyphicon glyphicon-trash"></span> Remover
+            </button>
+        </td>
+    </tr>
 {% empty %}
-  <tr>
-    <td colspan="5" class="text-center bg-warning">Nenhuma alergia cadastrada</td>
-  </tr>
+    <tr>
+        <td colspan="5" class="text-center bg-warning">Nenhuma alergia cadastrada</td>
+    </tr>
 {% endfor %}

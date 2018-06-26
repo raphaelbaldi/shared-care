@@ -60,4 +60,3 @@ def food_delete(request, pk):
         context = {'food': food}
         data['html_form'] = render_to_string('foods/includes/partial_food_delete.html', context, request=request)
     return JsonResponse(data)
-

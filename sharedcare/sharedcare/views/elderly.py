@@ -2,8 +2,9 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 
-from sharedcare.forms import ElderlyForm, ElderlyAllergyForm
-from sharedcare.models import Elderly, Allergy, Meal, ConsumedMedicine, Prescription, MedicalAppointment
+from sharedcare.forms import ElderlyForm, ElderlyAllergyForm, ElderlyMealForm, ElderlyConsumedMedicineForm, \
+    ElderlyPrescriptionForm, ElderlyMedicalAppointmentForm
+from sharedcare.models import Elderly, Allergy, Meal, ConsumedMedicine, Prescription, MedicalAppointment, Doctor
 
 
 def elderly_list(request):
@@ -73,7 +74,7 @@ def elderly_add_allergy(request, pk):
     form = ElderlyAllergyForm()
     if request.method == 'POST':
         form = ElderlyAllergyForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             data['form_is_valid'] = True
 
             allergy_pk = form.data.get('allergies')
@@ -111,6 +112,29 @@ def elderly_delete_allergy(request, pk, apk):
 
 def elderly_add_meal(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+    data = dict()
+
+    form = ElderlyMealForm()
+    if request.method == 'POST':
+        form = ElderlyMealForm(request.POST)
+        if form.is_valid():
+            data['form_is_valid'] = True
+            meal = form.save()
+
+            print(meal)
+
+            elderly.meals.add(meal)
+            elderly.save()
+
+            data['html_elderly_meal_list'] = render_to_string(
+                'elderlies/includes/meal/partial_elderly_meal_list.html', {
+                    'elderly': elderly
+                })
+
+    context = {'form': form, 'elderly': elderly}
+    data['html_form'] = render_to_string('elderlies/includes/meal/partial_elderly_meal_form.html', context,
+                                         request=request)
+    return JsonResponse(data)
 
 
 def elderly_delete_meal(request, pk, mpk):
@@ -136,6 +160,26 @@ def elderly_delete_meal(request, pk, mpk):
 
 def elderly_add_medicine(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+    data = dict()
+
+    form = ElderlyConsumedMedicineForm()
+    if request.method == 'POST':
+        form = ElderlyConsumedMedicineForm(request.POST)
+        if form.is_valid():
+            data['form_is_valid'] = True
+            consumed_medicine = form.save()
+            elderly.medicine.add(consumed_medicine)
+            elderly.save()
+
+            data['html_elderly_medicine_list'] = render_to_string(
+                'elderlies/includes/medicine/partial_elderly_medicine_list.html', {
+                    'elderly': elderly
+                })
+
+    context = {'form': form, 'elderly': elderly}
+    data['html_form'] = render_to_string('elderlies/includes/medicine/partial_elderly_medicine_form.html', context,
+                                         request=request)
+    return JsonResponse(data)
 
 
 def elderly_delete_medicine(request, pk, mpk):
@@ -161,6 +205,26 @@ def elderly_delete_medicine(request, pk, mpk):
 
 def elderly_add_prescription(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+    data = dict()
+
+    form = ElderlyPrescriptionForm()
+    if request.method == 'POST':
+        form = ElderlyPrescriptionForm(request.POST)
+        if form.is_valid():
+            data['form_is_valid'] = True
+            prescription = form.save()
+            elderly.prescribed_medicine.add(prescription)
+            elderly.save()
+
+            data['html_elderly_prescription_list'] = render_to_string(
+                'elderlies/includes/prescription/partial_elderly_prescription_list.html', {
+                    'elderly': elderly
+                })
+
+    context = {'form': form, 'elderly': elderly}
+    data['html_form'] = render_to_string('elderlies/includes/prescription/partial_elderly_prescription_form.html', context,
+                                         request=request)
+    return JsonResponse(data)
 
 
 def elderly_delete_prescription(request, pk, ppk):
@@ -186,6 +250,31 @@ def elderly_delete_prescription(request, pk, ppk):
 
 def elderly_add_medical_appointment(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+    data = dict()
+
+    form = ElderlyMedicalAppointmentForm()
+    if request.method == 'POST':
+        form = ElderlyMedicalAppointmentForm(request.POST)
+        if form.is_valid():
+            data['form_is_valid'] = True
+
+            medical_appointment = MedicalAppointment()
+            medical_appointment.doctor = form.cleaned_data['doctor']
+            medical_appointment.description = form.cleaned_data['description']
+            medical_appointment.date = form.cleaned_data['date']
+            medical_appointment.person = elderly
+            medical_appointment.save()
+
+            data['html_elderly_medical_appointment_list'] = render_to_string(
+                'elderlies/includes/medical_appointment/partial_elderly_medical_appointment_list.html', {
+                    'elderly': elderly
+                })
+
+    context = {'form': form, 'elderly': elderly}
+    data['html_form'] = render_to_string('elderlies/includes/medical_appointment/partial_elderly_medical_appointment_form.html',
+                                         context,
+                                         request=request)
+    return JsonResponse(data)
 
 
 def elderly_delete_medical_appointment(request, pk, mapk):

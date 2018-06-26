@@ -1,0 +1,25 @@
+<form method="post" action="{% url 'elderly_add_allergy' elderly.pk %}" class="js-elderly-add-allergy-form">
+    {% csrf_token %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Adicionar alergia a idoso</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="allergies">Alergia</label>
+            <select id="id_allergies" name="allergies">
+                <option value="-1">------------</option>
+                {% for allergy in form.fields.allergies.queryset %}
+                    <option value="{{ allergy.pk }}">{{ allergy.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary">Adicionar</button>
+    </div>
+</form>
+

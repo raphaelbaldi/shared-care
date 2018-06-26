@@ -24,7 +24,6 @@ def save_medicine_form(request, form, template_name):
         else:
             data['form_is_valid'] = False
     context = {'form': form}
-    print(template_name)
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 

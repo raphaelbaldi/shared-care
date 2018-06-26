@@ -107,6 +107,29 @@
         </tbody>
     </table>
 
+    <h2>Medicamentos consumidos</h2>
+    <hr/>
+    <p>
+        <button type="button" class="btn btn-primary js-elderly-add-medicine"
+                data-url="{% url 'elderly_add_medicine' elderly.id %}">
+            <span class="glyphicon glyphicon-plus"></span>
+            Adicionar medicamento injerido
+        </button>
+    </p>
+    <table class="table" id="elderly-medicine-table">
+        <thead>
+        <tr>
+            <th>Data</th>
+            <th>Medicamento</th>
+            <th>Dose</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'elderlies/includes/prescription/partial_elderly_medicine_list.html' %}
+        </tbody>
+    </table>
+
     <div class="modal fade" id="modal-elderly">
         <div class="modal-dialog">
             <div class="modal-content">

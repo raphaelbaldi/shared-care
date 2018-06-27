@@ -1,4 +1,4 @@
-{% for meal in elderly.meals.all %}
+{% for meal in elderly.meals.all|order_by:"-date" %}
     <tr>
         <td>{{ meal.date }}</td>
         <td>{{ meal.get_meal_type_display }}</td>

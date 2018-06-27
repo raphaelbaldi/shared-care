@@ -50,6 +50,7 @@ class Meal(models.Model):
         ('JA', "Janta"),
         ('CE', "Ceia")
     )
+    type = models.CharField(max_length=30)
     meal_type = models.CharField(null=False, blank=False, max_length=2, choices=MEAL_CHOICES, verbose_name="Tipo de refeição")
     date = models.DateTimeField(null=False, blank=False, verbose_name="Data/Hora")
     foods = models.ManyToManyField(Food, blank=True, verbose_name="Alimentos")

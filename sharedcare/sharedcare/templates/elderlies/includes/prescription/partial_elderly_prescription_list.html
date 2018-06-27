@@ -1,4 +1,6 @@
-{% for prescription in elderly.prescribed_medicine.all %}
+{% load sorting_extras %}
+
+{% for prescription in elderly.prescribed_medicine.all|order_by:"-startDate" %}
     <tr>
         <td>{{ prescription.medicine.name }}</td>
         <td>{{ prescription.startDate }}</td>

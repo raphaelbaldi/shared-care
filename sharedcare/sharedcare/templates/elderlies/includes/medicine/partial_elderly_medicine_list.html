@@ -1,4 +1,6 @@
-{% for medicine in elderly.medicine.all %}
+{% load sorting_extras %}
+
+{% for medicine in elderly.medicine.all|order_by:"-date" %}
     <tr>
         <td>{{ medicine.date }}</td>
         <td>{{ medicine.medicine.name }}</td>

@@ -1,4 +1,6 @@
-{% for medical_appointment in medical_appointments %}
+{% load sorting_extras %}
+
+{% for medical_appointment in medical_appointments|order_by:"-date" %}
     <tr>
         <td>{{ medical_appointment.date }}</td>
         <td>{{ medical_appointment.doctor.name }}</td>

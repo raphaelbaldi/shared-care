@@ -10,11 +10,17 @@ class UserProfile(models.Model):
     cpf = models.CharField(max_length=11, blank=False, verbose_name="CPF")
     birth_date = models.DateField(null=True, blank=True, verbose_name="Data de nascimento")
 
+    class Meta:
+        ordering = ['birth_date']
+
 
 class Allergy(models.Model):
     name = models.CharField(max_length=100, blank=False, verbose_name="Nome")
     description = models.TextField(max_length=500, blank=True, verbose_name="Descrição")
     symptoms = models.TextField(max_length=500, blank=True, verbose_name="Sintomas")
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -23,6 +29,9 @@ class Allergy(models.Model):
 class Doctor(models.Model):
     name = models.CharField(max_length=100, blank=False, verbose_name="Nome")
     specialty = models.CharField(max_length=50, blank=False, verbose_name="Especialidade")
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return self.name + ' - ' + self.specialty
@@ -34,9 +43,15 @@ class MedicalAppointment(models.Model):
     description = models.TextField(max_length=500, blank=True, verbose_name="Descrição da consulta")
     date = models.DateTimeField(null=False, blank=False, verbose_name="Data/Hora")
 
+    class Meta:
+        ordering = ['date']
+
 
 class Food(models.Model):
     name = models.CharField(max_length=100, blank=False, verbose_name="Nome")
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -55,10 +70,16 @@ class Meal(models.Model):
     date = models.DateTimeField(null=False, blank=False, verbose_name="Data/Hora")
     foods = models.ManyToManyField(Food, blank=True, verbose_name="Alimentos")
 
+    class Meta:
+        ordering = ['date']
+
 
 class Medicine(models.Model):
     name = models.CharField(max_length=100, blank=False, verbose_name="Nome")
     description = models.TextField(max_length=500, blank=True, null=True, verbose_name="Descrição")
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -70,11 +91,17 @@ class Prescription(models.Model):
     endDate = models.DateField(blank=True, null=True, verbose_name="Data de fim")
     frequency = models.PositiveIntegerField(verbose_name="Frequência (horas)")  # In hours
 
+    class Meta:
+        ordering = ['startDate']
+
 
 class ConsumedMedicine(models.Model):
     medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE, verbose_name="Medicamento")
     amount = models.PositiveIntegerField(blank=False, null=False, verbose_name="Dose")
     date = models.DateTimeField(blank=False, null=False, verbose_name="Data/Hora")
+
+    class Meta:
+        ordering = ['date']
 
 
 class Elderly(models.Model):
@@ -87,6 +114,9 @@ class Elderly(models.Model):
     meals = models.ManyToManyField(Meal, blank=True, verbose_name="Refeições")
     prescribed_medicine = models.ManyToManyField(Prescription, blank=True, verbose_name="Medicamentos prescritos")
     medicine = models.ManyToManyField(ConsumedMedicine, blank=True, verbose_name="Medicamentos injeridos")
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return self.name

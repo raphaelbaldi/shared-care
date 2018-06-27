@@ -1,3 +1,5 @@
+{% load sorting_extras %}
+
 {% for meal in elderly.meals.all|order_by:"-date" %}
     <tr>
         <td>{{ meal.date }}</td>

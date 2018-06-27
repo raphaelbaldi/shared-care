@@ -7,31 +7,40 @@ from django.db import models
 
 # User profile, connected to an actual user in the system
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    cpf = models.CharField(max_length=11, blank=False)
-    birth_date = models.DateField(null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Usuário")
+    cpf = models.CharField(max_length=11, blank=False, verbose_name="CPF")
+    birth_date = models.DateField(null=True, blank=True, verbose_name="Data de nascimento")
 
 
 class Allergy(models.Model):
-    name = models.CharField(max_length=100, blank=False)
-    description = models.TextField(max_length=500, blank=True)
-    symptoms = models.TextField(max_length=500, blank=True)
+    name = models.CharField(max_length=100, blank=False, verbose_name="Nome")
+    description = models.TextField(max_length=500, blank=True, verbose_name="Descrição")
+    symptoms = models.TextField(max_length=500, blank=True, verbose_name="Sintomas")
+
+    def __str__(self):
+        return self.name
 
 
 class Doctor(models.Model):
-    name = models.CharField(max_length=100, blank=False)
-    specialty = models.CharField(max_length=50, blank=False)
+    name = models.CharField(max_length=100, blank=False, verbose_name="Nome")
+    specialty = models.CharField(max_length=50, blank=False, verbose_name="Especialidade")
+
+    def __str__(self):
+        return self.name + ' - ' + self.specialty
 
 
 class MedicalAppointment(models.Model):
-    person = models.ForeignKey('Elderly', related_name='appointment', on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctor, related_name='appointment', on_delete=models.CASCADE)
-    description = models.TextField(max_length=500, blank=True)
-    date = models.DateTimeField(null=False, blank=False)
+    person = models.ForeignKey('Elderly', related_name='appointment', on_delete=models.CASCADE, verbose_name="Idoso")
+    doctor = models.ForeignKey(Doctor, related_name='appointment', on_delete=models.CASCADE, verbose_name="Médico")
+    description = models.TextField(max_length=500, blank=True, verbose_name="Descrição da consulta")
+    date = models.DateTimeField(null=False, blank=False, verbose_name="Data/Hora")
 
 
 class Food(models.Model):
-    name = models.CharField(max_length=100, blank=False)
+    name = models.CharField(max_length=100, blank=False, verbose_name="Nome")
+
+    def __str__(self):
+        return self.name
 
 
 class MealType(Enum):
@@ -47,40 +56,47 @@ class Meal(models.Model):
         max_length=5,
         choices=[(tag, tag.value) for tag in MealType],
         null=False,
-        blank=False
+        blank=False,
+        verbose_name="Tipo de refeição"
     )
-    date = models.DateTimeField(null=False, blank=False)
-    foods = models.ManyToManyField(Food, blank=True)
+    date = models.DateTimeField(null=False, blank=False, verbose_name="Data/Hora")
+    foods = models.ManyToManyField(Food, blank=True, verbose_name="Alimentos")
 
 
 class Medicine(models.Model):
-    name = models.CharField(max_length=100, blank=False)
-    description = models.TextField(max_length=500, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=False, verbose_name="Nome")
+    description = models.TextField(max_length=500, blank=True, null=True, verbose_name="Descrição")
+
+    def __str__(self):
+        return self.name
 
 
 class Prescription(models.Model):
-    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
-    startDate = models.DateField(blank=False, null=False)
-    endDate = models.DateField(blank=True, null=True)
-    frequency = models.PositiveIntegerField()  # In hours
+    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE, verbose_name="Medicamento")
+    startDate = models.DateField(blank=False, null=False, verbose_name="Data de início")
+    endDate = models.DateField(blank=True, null=True, verbose_name="Data de fim")
+    frequency = models.PositiveIntegerField(verbose_name="Frequência (horas)")  # In hours
 
 
 class ConsumedMedicine(models.Model):
-    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
-    amount = models.PositiveIntegerField(blank=False, null=False)
-    date = models.DateTimeField(blank=False, null=False)
+    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE, verbose_name="Medicamento")
+    amount = models.PositiveIntegerField(blank=False, null=False, verbose_name="Dose")
+    date = models.DateTimeField(blank=False, null=False, verbose_name="Data/Hora")
 
 
 class Elderly(models.Model):
-    name = models.CharField(max_length=100, blank=False)
-    cpf = models.CharField(max_length=11, blank=False)
-    birth_date = models.DateField(null=True, blank=True)
-    caretaker = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, blank=True, null=True)
-    allergies = models.ManyToManyField(Allergy, blank=True)
-    medical_appointments = models.ManyToManyField('Doctor', through='MedicalAppointment', related_name='person')
-    meals = models.ManyToManyField(Meal, blank=True)
-    prescribed_medicine = models.ManyToManyField(Prescription, blank=True)
-    medicine = models.ManyToManyField(ConsumedMedicine, blank=True)
+    name = models.CharField(max_length=100, blank=False, verbose_name="Nome")
+    cpf = models.CharField(max_length=11, blank=False, verbose_name="CPF")
+    birth_date = models.DateField(null=True, blank=True, verbose_name="Data de nascimento")
+    caretaker = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Cuidador")
+    allergies = models.ManyToManyField(Allergy, blank=True, verbose_name="Alergias")
+    medical_appointments = models.ManyToManyField('Doctor', through='MedicalAppointment', related_name='person', verbose_name="Consultas médicas")
+    meals = models.ManyToManyField(Meal, blank=True, verbose_name="Refeições")
+    prescribed_medicine = models.ManyToManyField(Prescription, blank=True, verbose_name="Medicamentos prescritos")
+    medicine = models.ManyToManyField(ConsumedMedicine, blank=True, verbose_name="Medicamentos injeridos")
+
+    def __str__(self):
+        return self.name
 
     def get_age(self):
         return datetime.now().year - self.birth_date.year

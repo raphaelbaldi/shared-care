@@ -266,9 +266,11 @@ def elderly_add_medical_appointment(request, pk):
             medical_appointment.person = elderly
             medical_appointment.save()
 
+            medical_appointments = MedicalAppointment.objects.filter(person=elderly)
             data['html_elderly_medical_appointment_list'] = render_to_string(
                 'elderlies/includes/medical_appointment/partial_elderly_medical_appointment_list.html', {
-                    'elderly': elderly
+                    'elderly': elderly,
+                    'medical_appointments': medical_appointments
                 })
 
     context = {'form': form, 'elderly': elderly}

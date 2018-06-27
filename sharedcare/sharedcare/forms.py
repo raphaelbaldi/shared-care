@@ -46,7 +46,7 @@ class ElderlyMedicalAppointmentForm(forms.ModelForm):
 class ElderlyMealForm(forms.ModelForm):
     class Meta:
         model = Meal
-        fields = ('date', 'type', 'foods',)
+        fields = ('date', 'meal_type', 'foods',)
 
 
 class ElderlyPrescriptionForm(forms.ModelForm):

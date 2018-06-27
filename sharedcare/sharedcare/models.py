@@ -1,5 +1,4 @@
 from datetime import datetime
-from enum import Enum
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -43,22 +42,15 @@ class Food(models.Model):
         return self.name
 
 
-class MealType(Enum):
-    CafeDaManha = "Café da Manhã"
-    Lanche = "Lanche"
-    Almoco = "Almoço"
-    Janta = "Janta"
-    Ceia = "Ceia"
-
-
 class Meal(models.Model):
-    type = models.CharField(
-        max_length=5,
-        choices=[(tag, tag.value) for tag in MealType],
-        null=False,
-        blank=False,
-        verbose_name="Tipo de refeição"
+    MEAL_CHOICES = (
+        ('CM', "Café da Manhã"),
+        ('LA', "Lanche"),
+        ('AL', "Almoço"),
+        ('JA', "Janta"),
+        ('CE', "Ceia")
     )
+    meal_type = models.CharField(null=False, blank=False, max_length=2, choices=MEAL_CHOICES, verbose_name="Tipo de refeição")
     date = models.DateTimeField(null=False, blank=False, verbose_name="Data/Hora")
     foods = models.ManyToManyField(Food, blank=True, verbose_name="Alimentos")
 

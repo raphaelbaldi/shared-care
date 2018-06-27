@@ -1,9 +1,9 @@
 {% for meal in elderly.meals.all %}
     <tr>
         <td>{{ meal.date }}</td>
-        <td>{{ meal.type }}</td>
+        <td>{{ meal.get_meal_type_display }}</td>
         <td>
-            {% for food in meal.foods %}
+            {% for food in meal.foods.all %}
                 {{ food.name }},
             {% endfor %}
         </td>

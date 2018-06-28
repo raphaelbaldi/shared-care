@@ -11,24 +11,19 @@ from sharedcare.models import Elderly, Allergy, Meal, ConsumedMedicine, Prescrip
 
 
 def get_filtered_elder_list(user):
-    if not hasattr(user, 'userprofile'):
-        return []
-
-    user_profile = user.userprofile
-
     elderlies = Elderly.objects.all()
     filtered_list = []
     for elderly in elderlies:
-        if elderly.accessible_by(user_profile):
+        if elderly.accessible_by(user):
             filtered_list.append(elderly)
     return filtered_list
 
 
 def is_family(user):
-    if not hasattr(user, 'userprofile'):
+    try:
+        return user.userprofile.is_family()
+    except:
         return False
-
-    return user.userprofile.is_family()
 
 
 @login_required
@@ -185,8 +180,6 @@ def elderly_add_meal(request, pk):
         if form.is_valid():
             data['form_is_valid'] = True
             meal = form.save()
-
-            print(meal)
 
             elderly.meals.add(meal)
             elderly.save()

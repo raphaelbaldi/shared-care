@@ -138,6 +138,11 @@ class Elderly(models.Model):
     def get_age(self):
         return datetime.now().year - self.birth_date.year
 
-    def accessible_by(self, user_profile):
+    def accessible_by(self, user):
+        if not hasattr(user, 'userprofile'):
+            return False
+
+        user_profile = user.userprofile
+
         return (user_profile.is_family() and self in user_profile.elderlies.all()) or (
                 user_profile.is_caretaker() and self.caretaker == user_profile)

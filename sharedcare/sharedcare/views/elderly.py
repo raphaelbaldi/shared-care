@@ -10,7 +10,12 @@ from sharedcare.forms import ElderlyForm, ElderlyAllergyForm, ElderlyMealForm, E
 from sharedcare.models import Elderly, Allergy, Meal, ConsumedMedicine, Prescription, MedicalAppointment, Doctor
 
 
-def get_filtered_elder_list(user_profile):
+def get_filtered_elder_list(user):
+    if not hasattr(user, 'userprofile'):
+        return []
+
+    user_profile = user.userprofile
+
     elderlies = Elderly.objects.all()
     filtered_list = []
     for elderly in elderlies:
@@ -19,15 +24,22 @@ def get_filtered_elder_list(user_profile):
     return filtered_list
 
 
+def is_family(user):
+    if not hasattr(user, 'userprofile'):
+        return False
+
+    return user.userprofile.is_family()
+
+
 @login_required
 def elderly_list(request):
     return render(request, 'elderlies/elderly_list.html', {'elderlies': get_filtered_elder_list(
-        request.user.userprofile)})
+        request.user)})
 
 
 @login_required
 def save_elderly_form(request, form, template_name):
-    if not request.user.userprofile.is_family():
+    if not is_family(request.user):
         raise PermissionDenied
 
     data = dict()
@@ -51,7 +63,7 @@ def save_elderly_form(request, form, template_name):
 
 @login_required
 def elderly_create(request):
-    if not request.user.userprofile.is_family():
+    if not is_family(request.user):
         raise PermissionDenied
     if request.method == 'POST':
         form = ElderlyForm(request.POST)
@@ -64,7 +76,7 @@ def elderly_create(request):
 def elderly_update(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     if request.method == 'POST':
@@ -78,7 +90,7 @@ def elderly_update(request, pk):
 def elderly_delete(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     data = dict()
@@ -98,7 +110,7 @@ def elderly_delete(request, pk):
 def elderly_details(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     medical_appointments = MedicalAppointment.objects.filter(person=elderly)
@@ -109,7 +121,7 @@ def elderly_details(request, pk):
 def elderly_add_allergy(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     data = dict()
@@ -139,7 +151,7 @@ def elderly_add_allergy(request, pk):
 def elderly_delete_allergy(request, pk, apk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     allergy = get_object_or_404(Allergy, pk=apk)
@@ -162,7 +174,7 @@ def elderly_delete_allergy(request, pk, apk):
 def elderly_add_meal(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     data = dict()
@@ -194,7 +206,7 @@ def elderly_add_meal(request, pk):
 def elderly_delete_meal(request, pk, mpk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     meal = get_object_or_404(Meal, pk=mpk)
@@ -220,7 +232,7 @@ def elderly_delete_meal(request, pk, mpk):
 def elderly_add_medicine(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     data = dict()
@@ -249,7 +261,7 @@ def elderly_add_medicine(request, pk):
 def elderly_delete_medicine(request, pk, mpk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     medicine = get_object_or_404(ConsumedMedicine, pk=mpk)
@@ -274,7 +286,7 @@ def elderly_delete_medicine(request, pk, mpk):
 def elderly_add_prescription(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     data = dict()
@@ -303,7 +315,7 @@ def elderly_add_prescription(request, pk):
 def elderly_delete_prescription(request, pk, ppk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     prescription = get_object_or_404(Prescription, pk=ppk)
@@ -329,7 +341,7 @@ def elderly_delete_prescription(request, pk, ppk):
 def elderly_add_medical_appointment(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     data = dict()
@@ -365,7 +377,7 @@ def elderly_add_medical_appointment(request, pk):
 def elderly_delete_medical_appointment(request, pk, mapk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     medical_appointment = get_object_or_404(MedicalAppointment, pk=mapk)
@@ -391,7 +403,7 @@ def elderly_delete_medical_appointment(request, pk, mapk):
 def elderly_add_caretaker(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     data = dict()
@@ -421,7 +433,7 @@ def elderly_add_caretaker(request, pk):
 def elderly_delete_caretaker(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
 
-    if not elderly.accessible_by(request.user.userprofile):
+    if not elderly.accessible_by(request.user):
         raise PermissionDenied
 
     data = dict()

@@ -6,9 +6,16 @@ from django.db import models
 
 # User profile, connected to an actual user in the system
 class UserProfile(models.Model):
+    ACCESS_TYPE = (
+        ('V', "Visitante"),
+        ('C', "Cuidador"),
+        ('F', "Familiar")
+    )
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Usuário")
     cpf = models.CharField(max_length=11, blank=False, verbose_name="CPF")
     birth_date = models.DateField(null=True, blank=True, verbose_name="Data de nascimento")
+    access_type = models.CharField(max_length=1, blank=True, null=True, default='V', choices=ACCESS_TYPE, verbose_name="Tipo de acesso")
 
     class Meta:
         ordering = ['birth_date']

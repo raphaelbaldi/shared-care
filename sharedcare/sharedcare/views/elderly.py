@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -7,11 +8,13 @@ from sharedcare.forms import ElderlyForm, ElderlyAllergyForm, ElderlyMealForm, E
 from sharedcare.models import Elderly, Allergy, Meal, ConsumedMedicine, Prescription, MedicalAppointment, Doctor
 
 
+@login_required
 def elderly_list(request):
     elderlies = Elderly.objects.all()
     return render(request, 'elderlies/elderly_list.html', {'elderlies': elderlies})
 
 
+@login_required
 def save_elderly_form(request, form, template_name):
     data = dict()
     if request.method == 'POST':
@@ -29,6 +32,7 @@ def save_elderly_form(request, form, template_name):
     return JsonResponse(data)
 
 
+@login_required
 def elderly_create(request):
     if request.method == 'POST':
         form = ElderlyForm(request.POST)
@@ -37,6 +41,7 @@ def elderly_create(request):
     return save_elderly_form(request, form, 'elderlies/includes/partial_elderly_create.html')
 
 
+@login_required
 def elderly_update(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
     if request.method == 'POST':
@@ -46,6 +51,7 @@ def elderly_update(request, pk):
     return save_elderly_form(request, form, 'elderlies/includes/partial_elderly_update.html')
 
 
+@login_required
 def elderly_delete(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
     data = dict()
@@ -62,12 +68,14 @@ def elderly_delete(request, pk):
     return JsonResponse(data)
 
 
+@login_required
 def elderly_details(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
     medical_appointments = MedicalAppointment.objects.filter(person=elderly)
     return render(request, 'elderlies/elderly_details.html', {'elderly': elderly, 'medical_appointments': medical_appointments})
 
 
+@login_required
 def elderly_add_allergy(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
     data = dict()
@@ -93,6 +101,7 @@ def elderly_add_allergy(request, pk):
     return JsonResponse(data)
 
 
+@login_required
 def elderly_delete_allergy(request, pk, apk):
     elderly = get_object_or_404(Elderly, pk=pk)
     allergy = get_object_or_404(Allergy, pk=apk)
@@ -111,6 +120,7 @@ def elderly_delete_allergy(request, pk, apk):
     return JsonResponse(data)
 
 
+@login_required
 def elderly_add_meal(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
     data = dict()
@@ -138,6 +148,7 @@ def elderly_add_meal(request, pk):
     return JsonResponse(data)
 
 
+@login_required
 def elderly_delete_meal(request, pk, mpk):
     elderly = get_object_or_404(Elderly, pk=pk)
     meal = get_object_or_404(Meal, pk=mpk)
@@ -159,6 +170,7 @@ def elderly_delete_meal(request, pk, mpk):
     return JsonResponse(data)
 
 
+@login_required
 def elderly_add_medicine(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
     data = dict()
@@ -183,6 +195,7 @@ def elderly_add_medicine(request, pk):
     return JsonResponse(data)
 
 
+@login_required
 def elderly_delete_medicine(request, pk, mpk):
     elderly = get_object_or_404(Elderly, pk=pk)
     medicine = get_object_or_404(ConsumedMedicine, pk=mpk)
@@ -204,6 +217,7 @@ def elderly_delete_medicine(request, pk, mpk):
     return JsonResponse(data)
 
 
+@login_required
 def elderly_add_prescription(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
     data = dict()
@@ -228,6 +242,7 @@ def elderly_add_prescription(request, pk):
     return JsonResponse(data)
 
 
+@login_required
 def elderly_delete_prescription(request, pk, ppk):
     elderly = get_object_or_404(Elderly, pk=pk)
     prescription = get_object_or_404(Prescription, pk=ppk)
@@ -249,6 +264,7 @@ def elderly_delete_prescription(request, pk, ppk):
     return JsonResponse(data)
 
 
+@login_required
 def elderly_add_medical_appointment(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
     data = dict()
@@ -280,6 +296,7 @@ def elderly_add_medical_appointment(request, pk):
     return JsonResponse(data)
 
 
+@login_required
 def elderly_delete_medical_appointment(request, pk, mapk):
     elderly = get_object_or_404(Elderly, pk=pk)
     medical_appointment = get_object_or_404(MedicalAppointment, pk=mapk)

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -6,11 +7,13 @@ from sharedcare.forms import FoodForm
 from sharedcare.models import Food
 
 
+@login_required
 def food_list(request):
     foods = Food.objects.all()
     return render(request, 'foods/food_list.html', {'foods': foods})
 
 
+@login_required
 def save_food_form(request, form, template_name):
     data = dict()
     if request.method == 'POST':
@@ -28,6 +31,7 @@ def save_food_form(request, form, template_name):
     return JsonResponse(data)
 
 
+@login_required
 def food_create(request):
     if request.method == 'POST':
         form = FoodForm(request.POST)
@@ -36,6 +40,7 @@ def food_create(request):
     return save_food_form(request, form, 'foods/includes/partial_food_create.html')
 
 
+@login_required
 def food_update(request, pk):
     food = get_object_or_404(Food, pk=pk)
     if request.method == 'POST':
@@ -45,6 +50,7 @@ def food_update(request, pk):
     return save_food_form(request, form, 'foods/includes/partial_food_update.html')
 
 
+@login_required
 def food_delete(request, pk):
     food = get_object_or_404(Food, pk=pk)
     data = dict()

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -6,11 +7,13 @@ from sharedcare.forms import DoctorForm
 from sharedcare.models import Doctor
 
 
+@login_required
 def doctor_list(request):
     doctors = Doctor.objects.all()
     return render(request, 'doctors/doctor_list.html', {'doctors': doctors})
 
 
+@login_required
 def save_doctor_form(request, form, template_name):
     data = dict()
     if request.method == 'POST':
@@ -28,6 +31,7 @@ def save_doctor_form(request, form, template_name):
     return JsonResponse(data)
 
 
+@login_required
 def doctor_create(request):
     if request.method == 'POST':
         form = DoctorForm(request.POST)
@@ -36,6 +40,7 @@ def doctor_create(request):
     return save_doctor_form(request, form, 'doctors/includes/partial_doctor_create.html')
 
 
+@login_required
 def doctor_update(request, pk):
     doctor = get_object_or_404(Doctor, pk=pk)
     if request.method == 'POST':
@@ -45,6 +50,7 @@ def doctor_update(request, pk):
     return save_doctor_form(request, form, 'doctors/includes/partial_doctor_update.html')
 
 
+@login_required
 def doctor_delete(request, pk):
     doctor = get_object_or_404(Doctor, pk=pk)
     data = dict()

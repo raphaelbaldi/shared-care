@@ -9,7 +9,10 @@ from sharedcare.views.doctor import *
 from sharedcare.views.elderly import *
 from sharedcare.views.food import *
 from sharedcare.views.medicine import *
-from sharedcare.views.user_account import signup
+from sharedcare.views.user_account import *
+
+from django.contrib.auth.views import login
+from django.contrib.auth.views import logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,6 +20,8 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
 
     url(r'^signup/$', signup, name='signup'),
+    url(r'^login/$', login, {'template_name': 'account/login.html'}, name='login'),
+    url(r'^logout/$', logout, {'next_page': 'home'}, name='logout'),
 
     url(r'^allergies/$', allergy_list, name='allergy_list'),
     url(r'^allergies/create/$', allergy_create, name='allergy_create'),

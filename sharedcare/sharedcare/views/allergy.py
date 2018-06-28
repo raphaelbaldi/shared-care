@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -6,11 +7,13 @@ from sharedcare.forms import AllergyForm
 from sharedcare.models import Allergy
 
 
+@login_required
 def allergy_list(request):
     allergies = Allergy.objects.all()
     return render(request, 'allergies/allergy_list.html', {'allergies': allergies})
 
 
+@login_required
 def save_allergy_form(request, form, template_name):
     data = dict()
     if request.method == 'POST':
@@ -28,6 +31,7 @@ def save_allergy_form(request, form, template_name):
     return JsonResponse(data)
 
 
+@login_required
 def allergy_create(request):
     if request.method == 'POST':
         form = AllergyForm(request.POST)
@@ -36,6 +40,7 @@ def allergy_create(request):
     return save_allergy_form(request, form, 'allergies/includes/partial_allergy_create.html')
 
 
+@login_required
 def allergy_update(request, pk):
     allergy = get_object_or_404(Allergy, pk=pk)
     if request.method == 'POST':
@@ -45,6 +50,7 @@ def allergy_update(request, pk):
     return save_allergy_form(request, form, 'allergies/includes/partial_allergy_update.html')
 
 
+@login_required
 def allergy_delete(request, pk):
     allergy = get_object_or_404(Allergy, pk=pk)
     data = dict()

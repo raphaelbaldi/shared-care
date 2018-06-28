@@ -3,5 +3,9 @@
 {% block content %}
     <h1 class="page-header">SharedCare</h1>
 
-    <p class="lead">Bem-vindo a SharedCare. Escolha uma opção no menu acima.</p>
+    {% if user.is_authenticated %}
+        <p class="lead">Bem-vindo a SharedCare. Escolha uma opção no menu acima.</p>
+    {% else %}
+        <p class="lead">Faça <a href="{% url 'login' %}">login</a> ou <a href="{% url 'signup' %}">crie uma conta</a> para ter acesso ao sistema</p>
+    {% endif %}
 {% endblock %}

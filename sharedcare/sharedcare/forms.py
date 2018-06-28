@@ -77,5 +77,10 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',)
 
 
+class UserModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.get_full_name()
+
+
 class CaretakerSelectionForm(forms.Form):
-    caretaker = forms.ModelChoiceField(queryset=User.objects.filter(userprofile__access_type='C'), label="Cuidador")
+    caretaker = UserModelChoiceField(queryset=User.objects.filter(userprofile__access_type='C'), label="Cuidador")

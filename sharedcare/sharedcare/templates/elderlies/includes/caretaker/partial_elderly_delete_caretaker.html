@@ -8,7 +8,7 @@
         <h4 class="modal-title">Confirmar desassociação de cuidador</h4>
     </div>
     <div class="modal-body">
-        <p class="lead">Você tem certeza de que quer desassociar o cuidador <strong>{{ elderly.caretaker.user.first_name }} {{ elderly.caretaker.user.last_name }}</strong> do idoso
+        <p class="lead">Você tem certeza de que quer desassociar o cuidador <strong>{{ elderly.caretaker.user.get_full_name }}</strong> do idoso
             <strong>{{ elderly.name }}</strong>?</p>
     </div>
     <div class="modal-footer">

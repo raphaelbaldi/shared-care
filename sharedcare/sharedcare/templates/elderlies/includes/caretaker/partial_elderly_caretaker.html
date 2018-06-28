@@ -9,7 +9,7 @@
         </button>
         {% endif %}
     {% else %}
-        {{ elderly.caretaker.user.first_name }} {{ elderly.caretaker.user.last_name }}
+        {{ elderly.caretaker.user.get_full_name }}
         {% if request.user.userprofile.is_family %} |
             <button type="button"
                     class="btn btn-danger btn-sm js-delete-elderly-caretaker"

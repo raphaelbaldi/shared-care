@@ -6,7 +6,7 @@ from django.template import loader
 from django.template.loader import render_to_string
 
 from sharedcare.forms import ElderlyForm, ElderlyAllergyForm, ElderlyMealForm, ElderlyConsumedMedicineForm, \
-    ElderlyPrescriptionForm, ElderlyMedicalAppointmentForm
+    ElderlyPrescriptionForm, ElderlyMedicalAppointmentForm, CaretakerSelectionForm
 from sharedcare.models import Elderly, Allergy, Meal, ConsumedMedicine, Prescription, MedicalAppointment, Doctor
 
 
@@ -385,4 +385,60 @@ def elderly_delete_medical_appointment(request, pk, mapk):
         data['html_form'] = render_to_string('elderlies/includes/medical_appointment/partial_elderly_medical_appointment_delete.html',
                                              context,
                                              request=request)
+    return JsonResponse(data)
+
+
+def elderly_add_caretaker(request, pk):
+    elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
+    data = dict()
+
+    form = CaretakerSelectionForm()
+    if request.method == 'POST':
+        form = CaretakerSelectionForm(request.POST)
+        if form.is_valid():
+            data['form_is_valid'] = True
+
+            elderly.caretaker = form.cleaned_data.get('caretaker').userprofile
+            elderly.save()
+
+            data['html_elderly_caretaker'] = render_to_string(
+                'elderlies/includes/caretaker/partial_elderly_caretaker.html', {
+                    'elderly': elderly,
+                })
+
+    context = {'form': form, 'elderly': elderly}
+    data['html_form'] = render_to_string(
+        'elderlies/includes/caretaker/partial_elderly_select_caretaker.html',
+        context,
+        request=request)
+    return JsonResponse(data)
+
+
+def elderly_delete_caretaker(request, pk):
+    elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
+    data = dict()
+    if request.method == 'POST':
+        elderly.caretaker = None
+        elderly.save()
+
+        data['form_is_valid'] = True
+
+        data['html_elderly_caretaker'] = render_to_string(
+            'elderlies/includes/caretaker/partial_elderly_caretaker.html', {
+                'elderly': elderly
+            })
+    else:
+        context = {'elderly': elderly}
+        data['html_form'] = render_to_string(
+            'elderlies/includes/caretaker/partial_elderly_delete_caretaker.html',
+            context,
+            request=request)
     return JsonResponse(data)

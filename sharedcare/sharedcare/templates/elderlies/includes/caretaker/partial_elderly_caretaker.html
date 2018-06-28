@@ -1,0 +1,21 @@
+<h2>Cuidador:
+    {% if elderly.caretaker == null %}
+        Nenhum
+        {% if request.user.userprofile.is_family %} |
+        <button type="button"
+                class="btn btn-warning btn-sm js-add-elderly-caretaker"
+                data-url="{% url 'elderly_add_caretaker' elderly.id %}">
+            <span class="glyphicon glyphicon-pencil"></span> Selecionar cuidador
+        </button>
+        {% endif %}
+    {% else %}
+        {{ elderly.caretaker.user.first_name }} {{ elderly.caretaker.user.last_name }}
+        {% if request.user.userprofile.is_family %} |
+            <button type="button"
+                    class="btn btn-danger btn-sm js-delete-elderly-caretaker"
+                    data-url="{% url 'elderly_delete_caretaker' elderly.id %}">
+                <span class="glyphicon glyphicon-trash"></span> Remover cuidador
+            </button>
+        {% endif %}
+    {% endif %}
+</h2>

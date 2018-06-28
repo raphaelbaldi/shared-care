@@ -51,6 +51,8 @@ urlpatterns = [
         name='elderly_add_medical_appointment'),
     url(r'^elderlies/(?P<pk>\d+)/delete_medical_appointment/(?P<mapk>\d+)/', elderly_delete_medical_appointment,
         name='elderly_delete_medical_appointment'),
+    url(r'^elderlies/(?P<pk>\d+)/add_caretaker/$', elderly_add_caretaker, name='elderly_add_caretaker'),
+    url(r'^elderlies/(?P<pk>\d+)/delete_caretaker/', elderly_delete_caretaker, name='elderly_delete_caretaker'),
 
     url(r'^foods/$', food_list, name='food_list'),
     url(r'^foods/create/$', food_create, name='food_create'),

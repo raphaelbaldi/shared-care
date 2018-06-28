@@ -57,6 +57,9 @@ $(function () {
         return saveForm("#elderly-medicine-table tbody", "html_elderly_medicine_list", $(this));
     };
 
+    var saveCaretakerForm = function() {
+        return saveForm("#elderly_caretaker_info", "html_elderly_caretaker", $(this));
+    }
 
     /* Binding */
     // Allergy
@@ -93,4 +96,11 @@ $(function () {
 
     $("#elderly-medicine-table").on("click", ".js-delete-elderly-medicine", loadForm);
     $("#modal-elderly").on("submit", ".js-elderly-delete-medicine-form", saveMedicineForm);
+
+    // Caretaker
+    $(".js-add-elderly-caretaker").click(loadForm);
+    $("#modal-elderly").on("submit", ".js-elderly-add-caretaker-form", saveCaretakerForm);
+
+    $(".js-delete-elderly-caretaker").click(loadForm);
+    $("#modal-elderly").on("submit", ".js-elderly-delete-caretaker-form", saveCaretakerForm);
 });

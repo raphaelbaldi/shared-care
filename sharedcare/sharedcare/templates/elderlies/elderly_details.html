@@ -9,7 +9,7 @@
 {% block content %}
     <h1 class="page-header">{{ elderly.name }}, {{ elderly.get_age }} anos</h1>
 
-    <h2>Cuidador: {% if elderly.caretaker == null %}Nenhum{% else %}{{ elderly.caretaker.name }}{% endif %}</h2>
+    <div id="elderly_caretaker_info">{% include 'elderlies/includes/caretaker/partial_elderly_caretaker.html' %}</div>
     <hr/>
 
     <h2>Alergias</h2>

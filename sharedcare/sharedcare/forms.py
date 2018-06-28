@@ -75,3 +75,7 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',)
+
+
+class CaretakerSelectionForm(forms.Form):
+    caretaker = forms.ModelChoiceField(queryset=User.objects.filter(userprofile__access_type='C'), label="Cuidador")

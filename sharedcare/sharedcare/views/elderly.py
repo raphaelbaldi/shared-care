@@ -10,6 +10,7 @@ from sharedcare.models import Elderly, Allergy, Meal, ConsumedMedicine, Prescrip
 
 @login_required
 def elderly_list(request):
+    print(request.user.userprofile)
     elderlies = Elderly.objects.all()
     return render(request, 'elderlies/elderly_list.html', {'elderlies': elderlies})
 

@@ -9,12 +9,14 @@
 {% block content %}
     <h1 class="page-header">Idosos</h1>
 
+    {% if user.userprofile.access_type == 'F' %}
     <p>
         <button type="button" class="btn btn-primary js-create-elderly" data-url="{% url 'elderly_create' %}">
             <span class="glyphicon glyphicon-plus"></span>
             Cadastrar idoso
         </button>
     </p>
+    {% endif %}
 
     <table class="table" id="elderly-table">
         <thead>

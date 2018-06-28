@@ -14,6 +14,7 @@ def signup(request):
             user_profile = UserProfile()
             user_profile.birth_date = form.cleaned_data.get('birth_date')
             user_profile.cpf = form.cleaned_data.get('cpf')
+            user_profile.access_type = form.cleaned_data.get('account_type')
             user_profile.user = user
 
             user.profile = user_profile

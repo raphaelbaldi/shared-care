@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Allergy, Doctor, Medicine, Elderly, Food, MedicalAppointment, Meal, Prescription, ConsumedMedicine
+from .models import Allergy, Doctor, Medicine, Elderly, Food, MedicalAppointment, Meal, Prescription, ConsumedMedicine, \
+    UserProfile
 
 
 class AllergyForm(forms.ModelForm):
@@ -67,8 +68,9 @@ class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True, help_text='Nome.')
     last_name = forms.CharField(max_length=30, required=True, help_text='Sobrenome.')
     email = forms.EmailField(max_length=254, required = True, help_text='Informe um email válido.')
-    birth_date = forms.DateField(help_text='Formato: DD/MM/YYYY')
-    cpf = forms.CharField(max_length=11, required=True, help_text="Informe seu CPF sem pontos ou traços.")
+    birth_date = forms.DateField(help_text='Formato: DD/MM/YYYY', label="Data de nascimento")
+    cpf = forms.CharField(max_length=11, required=True, help_text="Informe seu CPF sem pontos ou traços.", label="CPF")
+    account_type = forms.ChoiceField(choices=UserProfile.ACCESS_TYPE, required=True, help_text="Tipo de conta", label="Tipo de conta")
 
     class Meta:
         model = User

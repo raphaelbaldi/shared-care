@@ -16,9 +16,16 @@ class UserProfile(models.Model):
     cpf = models.CharField(max_length=11, blank=False, verbose_name="CPF")
     birth_date = models.DateField(null=True, blank=True, verbose_name="Data de nascimento")
     access_type = models.CharField(max_length=1, blank=True, null=True, default='V', choices=ACCESS_TYPE, verbose_name="Tipo de acesso")
+    elderlies = models.ManyToManyField('Elderly', blank=True, verbose_name="Familiares")
 
     class Meta:
         ordering = ['birth_date']
+
+    def is_family(self):
+        return self.access_type == 'F'
+
+    def is_caretaker(self):
+        return self.access_type == 'C'
 
 
 class Allergy(models.Model):
@@ -130,3 +137,7 @@ class Elderly(models.Model):
 
     def get_age(self):
         return datetime.now().year - self.birth_date.year
+
+    def accessible_by(self, user_profile):
+        return (user_profile.is_family() and self in user_profile.elderlies.all()) or (
+                user_profile.is_caretaker() and self.caretaker == user_profile)

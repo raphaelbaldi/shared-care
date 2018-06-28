@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.template import loader
 from django.template.loader import render_to_string
 
 from sharedcare.forms import ElderlyForm, ElderlyAllergyForm, ElderlyMealForm, ElderlyConsumedMedicineForm, \
@@ -8,23 +10,37 @@ from sharedcare.forms import ElderlyForm, ElderlyAllergyForm, ElderlyMealForm, E
 from sharedcare.models import Elderly, Allergy, Meal, ConsumedMedicine, Prescription, MedicalAppointment, Doctor
 
 
+def get_filtered_elder_list(user_profile):
+    elderlies = Elderly.objects.all()
+    filtered_list = []
+    for elderly in elderlies:
+        if elderly.accessible_by(user_profile):
+            filtered_list.append(elderly)
+    return filtered_list
+
+
 @login_required
 def elderly_list(request):
-    print(request.user.userprofile)
-    elderlies = Elderly.objects.all()
-    return render(request, 'elderlies/elderly_list.html', {'elderlies': elderlies})
+    return render(request, 'elderlies/elderly_list.html', {'elderlies': get_filtered_elder_list(
+        request.user.userprofile)})
 
 
 @login_required
 def save_elderly_form(request, form, template_name):
+    if not request.user.userprofile.is_family():
+        raise PermissionDenied
+
     data = dict()
     if request.method == 'POST':
         if form.is_valid():
-            form.save()
+            elderly = form.save()
+
+            request.user.userprofile.elderlies.add(elderly)
+            request.user.userprofile.save()
+
             data['form_is_valid'] = True
-            elderlies = Elderly.objects.all()
             data['html_elderly_list'] = render_to_string('elderlies/includes/partial_elderly_list.html', {
-                'elderlies': elderlies
+                'elderlies': get_filtered_elder_list(request.user.userprofile)
             })
         else:
             data['form_is_valid'] = False
@@ -35,6 +51,8 @@ def save_elderly_form(request, form, template_name):
 
 @login_required
 def elderly_create(request):
+    if not request.user.userprofile.is_family():
+        raise PermissionDenied
     if request.method == 'POST':
         form = ElderlyForm(request.POST)
     else:
@@ -45,6 +63,10 @@ def elderly_create(request):
 @login_required
 def elderly_update(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     if request.method == 'POST':
         form = ElderlyForm(request.POST, instance=elderly)
     else:
@@ -55,13 +77,16 @@ def elderly_update(request, pk):
 @login_required
 def elderly_delete(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     data = dict()
     if request.method == 'POST':
         elderly.delete()
         data['form_is_valid'] = True
-        elderlies = Elderly.objects.all()
         data['html_elderly_list'] = render_to_string('elderlies/includes/partial_elderly_list.html', {
-            'elderlies': elderlies
+            'elderlies': get_filtered_elder_list(request.user.userprofile)
         })
     else:
         context = {'elderly': elderly}
@@ -72,6 +97,10 @@ def elderly_delete(request, pk):
 @login_required
 def elderly_details(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     medical_appointments = MedicalAppointment.objects.filter(person=elderly)
     return render(request, 'elderlies/elderly_details.html', {'elderly': elderly, 'medical_appointments': medical_appointments})
 
@@ -79,6 +108,10 @@ def elderly_details(request, pk):
 @login_required
 def elderly_add_allergy(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     data = dict()
 
     form = ElderlyAllergyForm()
@@ -105,6 +138,10 @@ def elderly_add_allergy(request, pk):
 @login_required
 def elderly_delete_allergy(request, pk, apk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     allergy = get_object_or_404(Allergy, pk=apk)
     data = dict()
     if request.method == 'POST':
@@ -124,6 +161,10 @@ def elderly_delete_allergy(request, pk, apk):
 @login_required
 def elderly_add_meal(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     data = dict()
 
     form = ElderlyMealForm()
@@ -152,6 +193,10 @@ def elderly_add_meal(request, pk):
 @login_required
 def elderly_delete_meal(request, pk, mpk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     meal = get_object_or_404(Meal, pk=mpk)
     data = dict()
     if request.method == 'POST':
@@ -174,6 +219,10 @@ def elderly_delete_meal(request, pk, mpk):
 @login_required
 def elderly_add_medicine(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     data = dict()
 
     form = ElderlyConsumedMedicineForm()
@@ -199,6 +248,10 @@ def elderly_add_medicine(request, pk):
 @login_required
 def elderly_delete_medicine(request, pk, mpk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     medicine = get_object_or_404(ConsumedMedicine, pk=mpk)
     data = dict()
     if request.method == 'POST':
@@ -206,7 +259,6 @@ def elderly_delete_medicine(request, pk, mpk):
         medicine.delete()
 
         data['form_is_valid'] = True
-
         data['html_elderly_medicine_list'] = render_to_string(
             'elderlies/includes/medicine/partial_elderly_medicine_list.html', {
                 'elderly': elderly
@@ -221,6 +273,10 @@ def elderly_delete_medicine(request, pk, mpk):
 @login_required
 def elderly_add_prescription(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     data = dict()
 
     form = ElderlyPrescriptionForm()
@@ -246,6 +302,10 @@ def elderly_add_prescription(request, pk):
 @login_required
 def elderly_delete_prescription(request, pk, ppk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     prescription = get_object_or_404(Prescription, pk=ppk)
     data = dict()
     if request.method == 'POST':
@@ -268,6 +328,10 @@ def elderly_delete_prescription(request, pk, ppk):
 @login_required
 def elderly_add_medical_appointment(request, pk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     data = dict()
 
     form = ElderlyMedicalAppointmentForm()
@@ -300,6 +364,10 @@ def elderly_add_medical_appointment(request, pk):
 @login_required
 def elderly_delete_medical_appointment(request, pk, mapk):
     elderly = get_object_or_404(Elderly, pk=pk)
+
+    if not elderly.accessible_by(request.user.userprofile):
+        raise PermissionDenied
+
     medical_appointment = get_object_or_404(MedicalAppointment, pk=mapk)
     data = dict()
     if request.method == 'POST':
